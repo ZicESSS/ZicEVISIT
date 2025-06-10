@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }} - Сайт-визитка</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* НОВЫЕ СТИЛИ (темная тема, анимации, шрифт) */
+        :root { /* Определяем CSS-переменные для цветов */
+            --bg-color: #1a1a2e;        /* Основной фон (темно-синий/фиолетовый) */
+            --text-color: #e0e0e0;      /* Цвет текста (светло-серый) */
+            --highlight-color: #00bcd4; /* Цвет выделения/акцента (голубой) */
+            --card-bg-color: #2e2e4e;   /* Фон карточки/контейнера */
+            --shadow-color: rgba(0, 0, 0, 0.4); /* Цвет тени */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif; /* Новый шрифт */
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color); /* Используем переменную для фона */
+            color: var(--text-color);    /* Используем переменную для текста */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; /* Скрываем полосы прокрутки, если они появятся из-за анимации */
+        }
+        .container {
+            background: var(--card-bg-color); /* Фон карточки */
+            padding: 40px; /* Увеличим отступы */
+            border-radius: 12px; /* Более скругленные углы */
+            box-shadow: 0 5px 20px var(--shadow-color); /* Более выраженная тень */
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            /* Анимация появления контейнера */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 1s ease-out forwards;
+            animation-delay: 0.3s; /* Задержка для анимации */
+        }
+        h1 {
+            color: var(--highlight-color); /* Цвет заголовка */
+            margin-bottom: 15px;
+            font-size: 2.5em; /* Увеличим размер */
+            font-weight: 700; /* Жирный шрифт */
+            /* Анимация появления заголовка */
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInSlideUp 0.8s ease-out forwards;
+            animation-delay: 0.8s;
+        }
+        h2 {
+            color: var(--text-color);
+            margin-bottom: 25px;
+            font-size: 1.4em;
+            font-weight: 400; /* Обычный шрифт */
+            /* Анимация появления подзаголовка */
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInSlideUp 0.8s ease-out forwards;
+            animation-delay: 1s;
+        }
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            font-weight: 300; /* Легкий шрифт */
+            /* Анимация появления параграфов */
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInSlideUp 0.8s ease-out forwards;
+            animation-delay: 1.2s;
+        }
+        .contact-info a {
+            color: var(--highlight-color);
+            text-decoration: none;
+            margin: 0 15px; /* Увеличим отступы */
+            font-weight: 500; /* Средний шрифт */
+            transition: color 0.3s ease; /* Плавное изменение цвета при наведении */
+        }
+        .contact-info a:hover {
+            color: #ffffff; /* Белый при наведении */
+        }
+        .profile-picture {
+            width: 180px; /* Немного увеличим фото */
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 30px;
+            border: 4px solid var(--highlight-color); /* Рамка в цвет акцента */
+            /* Анимация появления фото */
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeInScaleUp 1s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        /* КЛЮЧЕВЫЕ КАДРЫ ДЛЯ АНИМАЦИЙ */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInScaleUp {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .portfolio-button {
+            display: inline-block; /* чтобы можно было задавать отступы и размеры */
+            background-color: var(--highlight-color); /* Цвет акцента */
+            color: var(--bg-color); /* Цвет текста кнопки */
+            text-decoration: none; /* Убираем подчеркивание */
+            padding: 12px 25px; /* Отступы внутри кнопки */
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .portfolio-button:hover {
+            background-color: #ffffff;
+            color: var(--bg-color);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if profile_image %}
+            <img src="{{ profile_image }}" alt="Фото профиля" class="profile-picture">
+        {% endif %}
+        <h1>{{ name }}</h1>
+        <h2>{{ title }}</h2>
+        <p>{{ description }}</p>
+        <div class="contact-info">
+            <p>Email: <a href="mailto:{{ email }}">{{ email }}</a></p>
+            <p>Телефон: <a href="tel:{{ phone }}">{{ phone }}</a></p>
+            {% if github_link %}
+                <p>GitHub: <a href="{{ github_link }}" target="_blank">{{ github_link }}</a></p>
+            {% endif %}
+            {% if linkedin_link %}
+                <p>LinkedIn: <a href="{{ linkedin_link }}" target="_blank">{{ linkedin_link }}</a></p>
+            {% endif %}
+        </div>
+        <a href="{% url 'portfolio' %}" class="portfolio-button">Посмотреть мои работы</a>
+
+    </div>
+</body>
+</html>

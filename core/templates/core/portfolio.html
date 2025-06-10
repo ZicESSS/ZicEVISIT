@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} - Портфолио</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a1a2e;
+            --text-color: #e0e0e0;
+            --highlight-color: #00bcd4;
+            --card-bg-color: #2e2e4e;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .container {
+            background: var(--card-bg-color);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            text-align: center;
+            max-width: 800px;
+            width: 90%;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 1s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        .page-header {
+            color: var(--highlight-color);
+            margin-bottom: 30px;
+            font-size: 2.8em;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInSlideUp 0.8s ease-out forwards;
+            animation-delay: 0.8s;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            width: 100%;
+        }
+
+        .project-card {
+            background: var(--bg-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            text-align: left;
+            padding-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 0.8s ease-out forwards;
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--highlight-color);
+        }
+
+        .project-card h3 {
+            color: var(--highlight-color);
+            font-size: 1.5em;
+            margin: 20px 20px 10px 20px;
+        }
+
+        .project-card p {
+            font-size: 0.95em;
+            color: var(--text-color);
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        .project-links {
+            padding: 0 20px;
+        }
+
+        .project-links a {
+            display: inline-block;
+            background-color: var(--highlight-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .project-links a:hover {
+            background-color: #ffffff;
+            color: var(--bg-color);
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: var(--highlight-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInSlideUp 0.8s ease-out forwards;
+            animation-delay: calc(1.5s + (var(--i, 0) * 0.1s));
+        }
+        .back-button:hover {
+            background-color: #ffffff;
+            color: var(--bg-color);
+        }
+
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-header">{{ page_title }}</h1>
+         <div class="project-grid">
+            {% for project in projects %}
+            <div class="project-card" style="animation-delay: {{ project.animation_delay }};">
+                {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                {% endif %}
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.description }}</p>
+                <div class="project-links">
+                    {% if project.github_link %}
+                        <a href="{{ project.github_link }}" target="_blank">GitHub</a>
+                    {% endif %}
+                    {% if project.live_link %}
+                        <a href="{{ project.live_link }}" target="_blank">Демо</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <a href="{% url 'home' %}" class="back-button" style="--i: 0;">Вернуться на главную</a>
+</body>
+</html>
