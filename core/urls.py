@@ -1,9 +1,11 @@
-# C:\Users\ZicE\PycharmProjects\DjangoProject\core\urls.py
-
+# /home/ZicE/mysite/core/urls.py
 from django.urls import path
-from . import views # Убедитесь, что 'views' импортированы
+from . import views
 
 urlpatterns = [
-    path('', views.home_view, name='home'), # Главная страница
-    path('portfolio/', views.portfolio_view, name='portfolio'), # ЭТА СТРОКА ДОЛЖНА БЫТЬ
+    path('', views.index, name='index'),
+    # ДОЛЖНА БЫТЬ СТРОКА ДЛЯ ПОРТФОЛИО:
+    path('portfolio/', views.portfolio, name='portfolio'), # <--- ДОБАВЬТЕ ЭТУ СТРОКУ, ЕСЛИ ЕЕ НЕТ!
+    # Убедитесь, что имя 'portfolio' совпадает с тем, что вы используете в шаблоне.
+    # Путь 'portfolio/' может быть любым, например, 'my-portfolio/'
 ]

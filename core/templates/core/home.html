@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ name }} - Сайт-визитка</title>
+    <title>{{ profile.name }} - Сайт-визитка</title> {# ИСПРАВЛЕНО: profile.name #}
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         /* НОВЫЕ СТИЛИ (темная тема, анимации, шрифт) */
@@ -234,20 +234,20 @@
     <div class="wave-background"></div>
     <div class="wave-background"></div>
     <div class="container">
-        {% if profile_image %}
-            <img src="{{ profile_image }}" alt="Фото профиля" class="profile-picture">
+        {% if profile.profile_image %} {# ИСПРАВЛЕНО: profile.profile_image #}
+            <img src="{{ profile.profile_image }}" alt="Фото профиля" class="profile-picture"> {# ИСПРАВЛЕНО: profile.profile_image #}
         {% endif %}
-        <h1>{{ name }}</h1>
-        <h2>{{ title }}</h2>
-        <p>{{ description }}</p>
+        <h1>{{ profile.name }}</h1> {# ИСПРАВЛЕНО: profile.name #}
+        <h2>{{ profile.title }}</h2> {# ИСПРАВЛЕНО: profile.title #}
+        <p>{{ profile.description }}</p> {# ИСПРАВЛЕНО: profile.description #}
         <div class="contact-info">
-            <p>Email: <a href="mailto:{{ email }}">{{ email }}</a></p>
-            <p>Телефон: <a href="tel:{{ phone }}">{{ phone }}</a></p>
-            {% if github_link %}
-                <p>GitHub: <a href="{{ github_link }}" target="_blank">{{ github_link }}</a></p>
+            <p>Email: <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></p> {# ИСПРАВЛЕНО: profile.email #}
+            <p>Телефон: <a href="tel:{{ profile.phone }}">{{ profile.phone }}</a></p> {# ИСПРАВЛЕНО: profile.phone #}
+            {% if profile.github_link %} {# ИСПРАВЛЕНО: profile.github_link #}
+                <p>GitHub: <a href="{{ profile.github_link }}" target="_blank">{{ profile.github_link }}</a></p> {# ИСПРАВЛЕНО: profile.github_link #}
             {% endif %}
-            {% if linkedin_link %}
-                <p>LinkedIn: <a href="{{ linkedin_link }}" target="_blank">{{ linkedin_link }}</a></p>
+            {% if profile.linkedin_link %} {# ИСПРАВЛЕНО: profile.linkedin_link #}
+                <p>LinkedIn: <a href="{{ profile.linkedin_link }}" target="_blank">{{ profile.linkedin_link }}</a></p> {# ИСПРАВЛЕНО: profile.linkedin_link #}
             {% endif %}
         </div>
 

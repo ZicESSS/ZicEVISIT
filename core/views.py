@@ -1,34 +1,27 @@
-from django.shortcuts import render
-from .models import Project
+# /home/ZicE/mysite/core/views.py
 
-def home_view(request):
+from django.shortcuts import render
+from django.conf import settings
+from .models import Project # Импортируем вашу модель Project
+
+def index(request):
+    profile_data = getattr(settings, 'PROFILE_DATA', {})
+    # Если вы используете проекты из БД на главной тоже, измените эту строку:
+    # portfolio_projects = Project.objects.all()
+    # А если из settings.py, то оставьте как есть:
+    # portfolio_projects = getattr(settings, 'PORTFOLIO_PROJECTS', [])
+
     context = {
-        'name': "ZicE", # <--
-        'title': "Backend Developer",
-        'description': "Привет! Я Роман, Backend разработчик. Я специализируюсь на разработке сайтов с использованием Jango, CSS и HTML. Моя цель - создавать эффективные и масштабируемые решения. Люблю решать сложные задачи и постоянно учусь новому. Готов к интересным проектам и сотрудничеству!",
-        'email': "romaswat666@gmail.com",
-        'phone': "+7(963)860-46-25",
-        'github_link': "https://github.com/ZicESSS",
-        'profile_image': 'static/images/profile.jpg',
+        'profile': profile_data,
+        # 'projects': portfolio_projects, # Если проекты для главной нужны
+        'page_title': 'Мой Сайт-Портфолио', # Добавьте это для главной страницы, если нужно
     }
     return render(request, 'core/home.html', context)
 
-def portfolio_view(request):
-    projects = Project.objects.all()
-
-    projects_with_delays = []
-    base_delay = 1.2
-    delay_increment = 0.1
-
-    for i, project in enumerate(projects):
-
-        project.animation_delay = f"{base_delay + i * delay_increment:.1f}s"
-
-        projects_with_delays.append(project)
-
-
+def portfolio(request):
+    portfolio_projects = Project.objects.all() # Получаем все проекты из БД
     context = {
-        'projects': projects_with_delays,
-        'page_title': 'Мои работы и проекты'
+        'projects': portfolio_projects,
+        'page_title': 'Мои работы', # <--- ДОБАВЬТЕ ЭТУ СТРОКУ для заголовка портфолио
     }
     return render(request, 'core/portfolio.html', context)

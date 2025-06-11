@@ -6,7 +6,6 @@
     <title>{{ page_title }} - Портфолио</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS-переменные (как в home.html) */
         :root {
             --bg-color: #1a1a2e;
             --text-color: #e0e0e0;
@@ -267,6 +266,6 @@
             {% endfor %}
         </div>
     </div>
-    <a href="{% url 'home' %}" class="back-button" style="--i: 0;">Вернуться на главную</a>
+    <a href="{% url 'index' %}" class="back-button" style="--i: 0;">Вернуться на главную</a>
 </body>
 </html>
