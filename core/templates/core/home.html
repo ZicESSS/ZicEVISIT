@@ -7,47 +7,136 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         /* НОВЫЕ СТИЛИ (темная тема, анимации, шрифт) */
-        :root { /* Определяем CSS-переменные для цветов */
-            --bg-color: #1a1a2e;        /* Основной фон (темно-синий/фиолетовый) */
-            --text-color: #e0e0e0;      /* Цвет текста (светло-серый) */
-            --highlight-color: #00bcd4; /* Цвет выделения/акцента (голубой) */
-            --card-bg-color: #2e2e4e;   /* Фон карточки/контейнера */
-            --shadow-color: rgba(0, 0, 0, 0.4); /* Цвет тени */
+        :root {
+            --bg-color: #1a1a2e;
+            --text-color: #e0e0e0;
+            --highlight-color: #00bcd4;
+            --card-bg-color: #2e2e4e;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+
+            /* НОВЫЕ ЦВЕТА ДЛЯ АНИМИРОВАННОГО ВОЛНОВОГО ФОНА */
+            --wave-color-1: rgba(26, 26, 46, 0.9);
+            --wave-color-2: rgba(36, 36, 66, 0.8);
+            --wave-color-3: rgba(46, 46, 76, 0.7);
+            --wave-color-4: rgba(56, 56, 86, 0.6);
         }
 
         body {
-            font-family: 'Montserrat', sans-serif; /* Новый шрифт */
+            font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            background: var(--bg-color); /* Используем переменную для фона */
-            color: var(--text-color);    /* Используем переменную для текста */
+            background: var(--bg-color);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden; /* Скрываем полосы прокрутки, если они появятся из-за анимации */
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
         }
+
+        /* Общие стили для всех волновых слоев */
+        .wave-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--wave-color-1), var(--wave-color-2), var(--wave-color-3), var(--wave-color-4));
+            animation: moveWaves 30s linear infinite;
+            transform: skewY(-8deg);
+            transform-origin: 0% 100%;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .wave-background:nth-child(2) {
+            animation-duration: 25s;
+            opacity: 0.6;
+            transform: skewY(10deg);
+            left: -50%;
+            top: 10%;
+            z-index: -2;
+        }
+
+        .wave-background:nth-child(3) {
+            animation-duration: 40s;
+            opacity: 0.5;
+            transform: skewY(-12deg);
+            left: 50%;
+            top: 20%;
+            z-index: -3;
+        }
+
+        .wave-background:nth-child(4) {
+            animation-duration: 35s;
+            opacity: 0.4;
+            transform: skewY(5deg);
+            left: -20%;
+            top: 30%;
+            z-index: -4;
+        }
+
+        /* Анимация движения волн (УВЕЛИЧИВАЕМ ИНТЕНСИВНОСТЬ) */
+        @keyframes moveWaves {
+            0% { transform: translateX(0) skewY(-8deg) scaleY(1); }
+            50% { transform: translateX(-25%) skewY(-10deg) scaleY(1.1) translateY(-15px); } /* Больше сдвиг и масштаб */
+            100% { transform: translateX(-50%) skewY(-8deg) scaleY(1); }
+        }
+
+        /* Для nth-child(2) */
+        .wave-background:nth-child(2) {
+            animation: moveWaves2 25s linear infinite;
+        }
+        @keyframes moveWaves2 {
+            0% { transform: translateX(0) skewY(10deg) scaleY(1); }
+            50% { transform: translateX(-25%) skewY(12deg) scaleY(1.2) translateY(10px); } /* Больше сдвиг и масштаб */
+            100% { transform: translateX(-50%) skewY(10deg) scaleY(1); }
+        }
+
+        /* Для nth-child(3) */
+        .wave-background:nth-child(3) {
+            animation: moveWaves3 40s linear infinite;
+        }
+        @keyframes moveWaves3 {
+            0% { transform: translateX(0) skewY(-12deg) scaleY(1); }
+            50% { transform: translateX(-25%) skewY(-14deg) scaleY(1.15) translateY(-5px); } /* Больше сдвиг и масштаб */
+            100% { transform: translateX(-50%) skewY(-12deg) scaleY(1); }
+        }
+
+        /* Для nth-child(4) */
+        .wave-background:nth-child(4) {
+            animation: moveWaves4 35s linear infinite;
+        }
+        @keyframes moveWaves4 {
+            0% { transform: translateX(0) skewY(5deg) scaleY(1); }
+            50% { transform: translateX(-25%) skewY(7deg) scaleY(1.25) translateY(20px); } /* Больше сдвиг и масштаб */
+            100% { transform: translateX(-50%) skewY(5deg) scaleY(1); }
+        }
+
+
         .container {
-            background: var(--card-bg-color); /* Фон карточки */
-            padding: 40px; /* Увеличим отступы */
-            border-radius: 12px; /* Более скругленные углы */
-            box-shadow: 0 5px 20px var(--shadow-color); /* Более выраженная тень */
+            background: var(--card-bg-color);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px var(--shadow-color);
             text-align: center;
             max-width: 600px;
             width: 90%;
-            /* Анимация появления контейнера */
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInSlideUp 1s ease-out forwards;
-            animation-delay: 0.3s; /* Задержка для анимации */
+            animation-delay: 0.3s;
+            position: relative;
+            z-index: 2;
         }
         h1 {
-            color: var(--highlight-color); /* Цвет заголовка */
+            color: var(--highlight-color);
             margin-bottom: 15px;
-            font-size: 2.5em; /* Увеличим размер */
-            font-weight: 700; /* Жирный шрифт */
-            /* Анимация появления заголовка */
+            font-size: 2.5em;
+            font-weight: 700;
             opacity: 0;
             transform: translateY(10px);
             animation: fadeInSlideUp 0.8s ease-out forwards;
@@ -57,8 +146,7 @@
             color: var(--text-color);
             margin-bottom: 25px;
             font-size: 1.4em;
-            font-weight: 400; /* Обычный шрифт */
-            /* Анимация появления подзаголовка */
+            font-weight: 400;
             opacity: 0;
             transform: translateY(10px);
             animation: fadeInSlideUp 0.8s ease-out forwards;
@@ -67,8 +155,7 @@
         p {
             margin-bottom: 20px;
             font-size: 1.1em;
-            font-weight: 300; /* Легкий шрифт */
-            /* Анимация появления параграфов */
+            font-weight: 300;
             opacity: 0;
             transform: translateY(10px);
             animation: fadeInSlideUp 0.8s ease-out forwards;
@@ -77,21 +164,20 @@
         .contact-info a {
             color: var(--highlight-color);
             text-decoration: none;
-            margin: 0 15px; /* Увеличим отступы */
-            font-weight: 500; /* Средний шрифт */
-            transition: color 0.3s ease; /* Плавное изменение цвета при наведении */
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
         .contact-info a:hover {
-            color: #ffffff; /* Белый при наведении */
+            color: #ffffff;
         }
         .profile-picture {
-            width: 180px; /* Немного увеличим фото */
+            width: 180px;
             height: 180px;
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 30px;
-            border: 4px solid var(--highlight-color); /* Рамка в цвет акцента */
-            /* Анимация появления фото */
+            border: 4px solid var(--highlight-color);
             opacity: 0;
             transform: scale(0.8);
             animation: fadeInScaleUp 1s ease-out forwards;
@@ -119,12 +205,14 @@
                 transform: scale(1);
             }
         }
+
+        /* НОВЫЕ СТИЛИ ДЛЯ КНОПКИ ПОРТФОЛИО */
         .portfolio-button {
-            display: inline-block; /* чтобы можно было задавать отступы и размеры */
-            background-color: var(--highlight-color); /* Цвет акцента */
-            color: var(--bg-color); /* Цвет текста кнопки */
-            text-decoration: none; /* Убираем подчеркивание */
-            padding: 12px 25px; /* Отступы внутри кнопки */
+            display: inline-block;
+            background-color: var(--highlight-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            padding: 12px 25px;
             border-radius: 8px;
             font-weight: 600;
             margin-top: 30px;
@@ -137,9 +225,14 @@
             color: var(--bg-color);
             transform: translateY(-3px);
         }
+
     </style>
 </head>
 <body>
+    <div class="wave-background"></div>
+    <div class="wave-background"></div>
+    <div class="wave-background"></div>
+    <div class="wave-background"></div>
     <div class="container">
         {% if profile_image %}
             <img src="{{ profile_image }}" alt="Фото профиля" class="profile-picture">
@@ -157,6 +250,7 @@
                 <p>LinkedIn: <a href="{{ linkedin_link }}" target="_blank">{{ linkedin_link }}</a></p>
             {% endif %}
         </div>
+
         <a href="{% url 'portfolio' %}" class="portfolio-button">Посмотреть мои работы</a>
 
     </div>
